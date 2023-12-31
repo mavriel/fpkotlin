@@ -92,4 +92,72 @@ class ListTest {
         assertEquals(5, l.get(4))
         assertEquals(4, l.get(5))
     }
+
+    @Test
+    fun add1() {
+        val l = add1(List.of(1, 2, 3, 4))
+        assertEquals(2, l.get(0))
+        assertEquals(3, l.get(1))
+        assertEquals(4, l.get(2))
+        assertEquals(5, l.get(3))
+    }
+
+    @Test
+    fun mapToString() {
+        val l = mapToString(List.of(1.0, 2.0, 3.0, 4.0))
+        assertEquals("1.0", l.get(0))
+        assertEquals("2.0", l.get(1))
+        assertEquals("3.0", l.get(2))
+        assertEquals("4.0", l.get(3))
+    }
+
+    @Test
+    fun map() {
+        val l = map(List.of(1.0, 2.0, 3.0, 4.0)) { it.toString() }
+        assertEquals("1.0", l.get(0))
+        assertEquals("2.0", l.get(1))
+        assertEquals("3.0", l.get(2))
+        assertEquals("4.0", l.get(3))
+    }
+
+    @Test
+    fun filter() {
+        val l = filter(List.of(1, 2, 3, 4, 5)) { it % 2 == 0 }
+        assertEquals(2, l.get(0))
+        assertEquals(4, l.get(1))
+    }
+
+    @Test
+    fun flatMap() {
+        val l = flatMap(List.of(1, 2, 3)) { List.of(it, it) }
+        assertEquals(1, l.get(0))
+        assertEquals(1, l.get(1))
+        assertEquals(2, l.get(2))
+        assertEquals(2, l.get(3))
+        assertEquals(3, l.get(4))
+        assertEquals(3, l.get(5))
+    }
+
+    @Test
+    fun filterByFlatMap() {
+        val l = filterByFlatMap(List.of(1, 2, 3, 4, 5)) { it % 2 == 0 }
+        assertEquals(2, l.get(0))
+        assertEquals(4, l.get(1))
+    }
+
+    @Test
+    fun zipAdd() {
+        val l = zipAdd(List.of(1, 2, 3), List.of(4, 5, 6))
+        assertEquals(5, l.get(0))
+        assertEquals(7, l.get(1))
+        assertEquals(9, l.get(2))
+    }
+
+    @Test
+    fun zipWith() {
+        val l = zipWith(List.of(1, 2, 3), List.of(4, 5, 6)) { a, b -> a + b }
+        assertEquals(5, l.get(0))
+        assertEquals(7, l.get(1))
+        assertEquals(9, l.get(2))
+    }
 }

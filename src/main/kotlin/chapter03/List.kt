@@ -86,3 +86,41 @@ fun <A> flatten(xxs: List<List<A>>): List<A> = foldLeft(xxs, empty()) { xs1, xs2
         is Cons -> append(xs1, xs2)
     }
 }
+
+// 3.15
+fun add1(xs: List<Int>): List<Int> = foldRight(xs, empty()) { i, l -> Cons(i + 1, l) }
+
+// 3.16
+fun mapToString(xs: List<Double>): List<String> = foldRight(xs, empty()) { i, ls -> Cons(i.toString(), ls) }
+
+// 3.17
+fun <A, B> map(xs: List<A>, f: (A) -> B): List<B> = foldRight(xs, empty()) { i, ls -> Cons(f(i), ls) }
+
+// 3.18
+fun <A> filter(xs: List<A>, f: (A) -> Boolean): List<A> =
+    foldRight(xs, empty()) { i, ls -> if (f(i)) Cons(i, ls) else ls }
+
+// 3.19
+fun <A, B> flatMap(xa: List<A>, f: (A) -> List<B>): List<B> = flatten(map(xa, f))
+
+// 3.20
+fun <A> filterByFlatMap(xs: List<A>, f: (A) -> Boolean): List<A> = flatMap(xs) { if (f(it)) Cons(it, Nil) else Nil }
+
+// 3.21
+fun zipAdd(xa: List<Int>, xb: List<Int>): List<Int> =
+    when (xa) {
+        is Nil -> Nil
+        is Cons -> when (xb) {
+            is Nil -> Nil
+            is Cons -> Cons(xa.head + xb.head, zipAdd(xa.tail, xb.tail))
+        }
+    }
+
+// 3.22
+fun <A, B, C> zipWith(xa: List<A>, xb: List<B>, f: (A, B) -> C): List<C> = when (xa) {
+    is Nil -> Nil
+    is Cons -> when (xb) {
+        is Nil -> Nil
+        is Cons -> Cons(f(xa.head, xb.head), zipWith(xa.tail, xb.tail, f))
+    }
+}
